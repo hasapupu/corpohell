@@ -31,11 +31,17 @@ func updateScore(val: int):
 
 func onRoundEnd():
 	await get_tree().create_timer(1).timeout
-	(get_tree().root.get_node("gameManager") as main).money += floor(currScore)
+	var man = (get_tree().root.get_node("gameManager") as main)
+	man.money += floor(currScore)
 	currScore = 0
-	get_tree().root.get_node("gameManager/NinePatchRect2").setup()
 	await get_tree().create_timer(0.3).timeout
-	get_tree().root.get_node("gameManager").shopAnim.play("shopStart")
+	if man.money < man.quota:
+		print(man.money, man.quota)
+		get_tree().reload_current_scene()
+		return
+	man.money -= man.quota
+	get_tree().root.get_node("gameManager/NinePatchRect2").setup()
+	man.shopAnim.play("shopStart")
 
 func getSoulCount() -> int:
 	var out = 0

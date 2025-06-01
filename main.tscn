@@ -1,11 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://0blbeimxns5x"]
+[gd_scene load_steps=27 format=3 uid="uid://0blbeimxns5x"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_26eow"]
 [ext_resource type="Script" path="res://soulsParent.gd" id="1_aebng"]
 [ext_resource type="Script" path="res://soulBoxWall.gd" id="2_db2ki"]
+[ext_resource type="FontFile" uid="uid://c0fq8inred61r" path="res://Stepalange-x3BLm.otf" id="4_7hghy"]
+[ext_resource type="Script" path="res://bbH.gd" id="4_oc1cv"]
 [ext_resource type="Script" path="res://shop.gd" id="4_pqbpi"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o32o8"]
+[ext_resource type="Script" path="res://cursor.gd" id="5_ylm8s"]
+[ext_resource type="Texture2D" uid="uid://boe0sq2hormy2" path="res://sprites/chdesk.png" id="6_6shga"]
+[ext_resource type="Texture2D" uid="uid://vha504r8e3o0" path="res://sprites/shopup.png" id="7_4bmfs"]
+[ext_resource type="AudioStream" uid="uid://djxry21e6o35k" path="res://chmusic.wav" id="10_l5a4l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w0ywm"]
 size = Vector2(205, 1)
@@ -13,20 +17,25 @@ size = Vector2(205, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cu7ve"]
 size = Vector2(1, 115)
 
-[sub_resource type="Animation" id="Animation_4y83e"]
-resource_name = "shopStart"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("NinePatchRect2:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1.46409, 0.143588),
-"update": 0,
-"values": [Vector2(0, -153), Vector2(0, 0)]
-}
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvq2n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lr1ho"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5jj3e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i156o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01wpj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7y2df"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_smsme"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cq634"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1x0i1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v402p"]
 
 [sub_resource type="Animation" id="Animation_5wtpd"]
 length = 0.001
@@ -58,6 +67,21 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -153)]
 }
 
+[sub_resource type="Animation" id="Animation_4y83e"]
+resource_name = "shopStart"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NinePatchRect2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1.46409, 0.143588),
+"update": 0,
+"values": [Vector2(0, -153), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c7wq5"]
 _data = {
 "RESET": SubResource("Animation_5wtpd"),
@@ -68,23 +92,36 @@ _data = {
 [node name="gameManager" type="Node"]
 script = ExtResource("1_26eow")
 
+[node name="Node" type="Node" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Node"]
+process_priority = -1
+process_physics_priority = -1
+show_behind_parent = true
+light_mask = 0
+z_index = -5
+texture_filter = 1
+texture_repeat = 2
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("6_6shga")
+
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 offset_right = 205.0
 offset_bottom = 147.0
-texture = SubResource("PlaceholderTexture2D_o32o8")
 
 [node name="souls" type="Node" parent="NinePatchRect"]
 script = ExtResource("1_aebng")
 
 [node name="StaticBody2D" type="Area2D" parent="NinePatchRect"]
-script = ExtResource("2_db2ki")
+script = ExtResource("4_oc1cv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NinePatchRect/StaticBody2D"]
 position = Vector2(102.5, 0.5)
 shape = SubResource("RectangleShape2D_w0ywm")
 
 [node name="StaticBody2D4" type="Area2D" parent="NinePatchRect"]
-script = ExtResource("2_db2ki")
+script = ExtResource("4_oc1cv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NinePatchRect/StaticBody2D4"]
 position = Vector2(102.5, 114.5)
@@ -106,107 +143,181 @@ position = Vector2(0.5, 57.5)
 shape = SubResource("RectangleShape2D_cu7ve")
 
 [node name="Button" type="Button" parent="NinePatchRect"]
+top_level = true
 layout_mode = 0
-offset_top = 115.0
-offset_right = 46.0
-offset_bottom = 146.0
+offset_left = 12.0
+offset_top = 116.0
+offset_right = 58.0
+offset_bottom = 147.0
+theme_override_fonts/font = ExtResource("4_7hghy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wvq2n")
 text = "Start"
+flat = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect"]
+top_level = true
 layout_mode = 0
-offset_left = 46.0
+offset_left = 73.0
 offset_top = 115.0
-offset_right = 204.0
-offset_bottom = 147.0
+offset_right = 203.0
+offset_bottom = 145.0
+theme_override_fonts/normal_font = ExtResource("4_7hghy")
+bbcode_enabled = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="NinePatchRect"]
+top_level = true
+layout_mode = 0
+offset_left = 73.0
+offset_top = 129.0
+offset_right = 203.0
+offset_bottom = 145.0
+theme_override_fonts/normal_font = ExtResource("4_7hghy")
 bbcode_enabled = true
 
 [node name="Money" type="RichTextLabel" parent="."]
-offset_top = 246.0
+top_level = true
+offset_top = 253.0
 offset_right = 123.0
 offset_bottom = 270.0
+theme_override_fonts/normal_font = ExtResource("4_7hghy")
 text = "$0"
 
 [node name="Souls" type="Button" parent="."]
-offset_left = 406.0
-offset_top = 9.0
-offset_right = 469.0
-offset_bottom = 52.0
+top_level = true
+offset_left = 388.0
+offset_top = 62.0
+offset_right = 451.0
+offset_bottom = 100.0
+theme_override_fonts/font = ExtResource("4_7hghy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lr1ho")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5jj3e")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i156o")
 text = "Souls:0"
+flat = true
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(195, 105)
 
 [node name="NinePatchRect2" type="NinePatchRect" parent="."]
-z_index = 4096
+z_index = 4095
 offset_top = -153.0
 offset_right = 205.0
 offset_bottom = -6.0
-texture = SubResource("PlaceholderTexture2D_o32o8")
+texture = ExtResource("7_4bmfs")
 script = ExtResource("4_pqbpi")
 
 [node name="Button" type="Button" parent="NinePatchRect2"]
-offset_left = 12.0
-offset_top = 109.0
-offset_right = 61.0
-offset_bottom = 140.0
+layout_mode = 0
+offset_left = 17.0
+offset_top = 104.0
+offset_right = 66.0
+offset_bottom = 128.0
+theme_override_fonts/font = ExtResource("4_7hghy")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_01wpj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7y2df")
 text = "Souls"
+flat = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect2/Button"]
 layout_mode = 0
-offset_left = 6.0
-offset_top = -13.0
-offset_right = 43.0
-offset_bottom = -2.0
+offset_left = 19.0
+offset_top = -7.0
+offset_right = 56.0
+offset_bottom = 4.0
+theme_override_fonts/normal_font = ExtResource("4_7hghy")
 theme_override_font_sizes/normal_font_size = 7
 text = "100"
 
 [node name="Button2" type="Button" parent="NinePatchRect2"]
-offset_left = 80.0
-offset_top = 109.0
-offset_right = 129.0
-offset_bottom = 140.0
+layout_mode = 0
+offset_left = 77.0
+offset_top = 105.0
+offset_right = 126.0
+offset_bottom = 129.0
+theme_override_fonts/font = ExtResource("4_7hghy")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/focus = SubResource("StyleBoxEmpty_smsme")
 text = "Traps"
+flat = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect2/Button2"]
-offset_left = 6.0
-offset_top = -13.0
-offset_right = 43.0
-offset_bottom = -2.0
+layout_mode = 0
+offset_left = 19.0
+offset_top = -7.0
+offset_right = 56.0
+offset_bottom = 4.0
+theme_override_fonts/normal_font = ExtResource("4_7hghy")
 theme_override_font_sizes/normal_font_size = 7
 text = "100"
 
 [node name="Button3" type="Button" parent="NinePatchRect2"]
-offset_left = 146.0
-offset_top = 109.0
-offset_right = 195.0
-offset_bottom = 140.0
+layout_mode = 0
+offset_left = 139.0
+offset_top = 106.0
+offset_right = 188.0
+offset_bottom = 130.0
+theme_override_fonts/font = ExtResource("4_7hghy")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cq634")
 text = "Tarot"
+flat = true
 
 [node name="Button4" type="Button" parent="NinePatchRect2"]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 7.0
+offset_top = 4.0
+offset_right = 18.0
+offset_bottom = 15.0
+theme_override_fonts/font = ExtResource("4_7hghy")
 theme_override_font_sizes/font_size = 3
-text = "X"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1x0i1")
+flat = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect2"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 2.0
+offset_right = 203.0
+offset_bottom = 21.0
+theme_override_fonts/normal_font = ExtResource("4_7hghy")
+text = "Death's shop"
 
 [node name="Traps" type="Button" parent="."]
-offset_left = 311.0
-offset_top = 9.0
-offset_right = 381.0
-offset_bottom = 53.0
+top_level = true
+offset_left = 262.0
+offset_top = 105.0
+offset_right = 332.0
+offset_bottom = 142.0
+theme_override_fonts/font = ExtResource("4_7hghy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_v402p")
 text = "Traps:0"
+flat = true
 
 [node name="Rounds" type="RichTextLabel" parent="."]
-offset_left = 223.0
-offset_top = 21.0
-offset_right = 295.0
-offset_bottom = 63.0
+offset_left = 273.0
+offset_top = 18.0
+offset_right = 345.0
+offset_bottom = 60.0
+rotation = 0.314099
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_7hghy")
+theme_override_font_sizes/normal_font_size = 21
 text = "Round: 1"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_c7wq5")
 }
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+top_level = true
+z_index = 4096
+script = ExtResource("5_ylm8s")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_l5a4l")
+autoplay = true
 
 [connection signal="button_down" from="NinePatchRect/Button" to="NinePatchRect/souls" method="onButtonPress"]
 [connection signal="button_down" from="Souls" to="." method="onSoulButton"]

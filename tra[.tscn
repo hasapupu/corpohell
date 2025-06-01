@@ -1,26 +1,50 @@
-[gd_scene load_steps=5 format=3 uid="uid://i0utmbo06hso"]
+[gd_scene load_steps=9 format=3 uid="uid://i0utmbo06hso"]
 
 [ext_resource type="Script" path="res://trap.gd" id="1_4i0ey"]
-
-[sub_resource type="Gradient" id="Gradient_mlkk7"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_x2hml"]
-gradient = SubResource("Gradient_mlkk7")
-width = 5
-height = 5
+[ext_resource type="Texture2D" uid="uid://dl0v580fci6di" path="res://sprites/spikeTrap.png" id="2_lovrq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ncijj"]
 size = Vector2(6, 6)
+
+[sub_resource type="Curve" id="Curve_u4mg1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xypeu"]
+curve = SubResource("Curve_u4mg1")
+
+[sub_resource type="Curve" id="Curve_orefx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hbjvu"]
+curve = SubResource("Curve_orefx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c7tqi"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 33.71
+initial_velocity_max = 33.71
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_hbjvu")
+color = Color(0.87451, 0, 0.137255, 1)
+alpha_curve = SubResource("CurveTexture_xypeu")
 
 [node name="Area2D" type="Area2D"]
 script = ExtResource("1_4i0ey")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("GradientTexture2D_x2hml")
+texture = ExtResource("2_lovrq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ncijj")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_c7tqi")
+one_shot = true
+explosiveness = 1.0
 
 [connection signal="body_entered" from="." to="." method="onEnter"]

@@ -22,6 +22,7 @@ func setup():
 	trapButt.text = "Traps:" + str(trapAmount)
 	soulButt.get_node("RichTextLabel").text = str(soulPrice)
 	trapButt.get_node("RichTextLabel").text = str(trapPrice)
+	man.quota *= randf_range(8,12) * man.round
 
 func onSoulBuy():
 	if isSoulBought == false and man.money > soulPrice:

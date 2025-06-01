@@ -12,6 +12,8 @@ var traps:=2
 @onready var trapButton:= get_node("Traps") as Button
 @onready var soulPrefab:= preload("res://soul.tscn")
 @onready var shopAnim:= get_node("AnimationPlayer") as AnimationPlayer
+var quota:= 40
+@onready var quotaText := get_node("NinePatchRect/RichTextLabel2")
 
 func onSoulButton():
 	if souls > 0:
@@ -28,6 +30,7 @@ func onTrapButton():
 		get_node("NinePatchRect/souls").add_child(newTrap)
 
 func _process(delta):
+	quotaText.text= "Quota: " + str(quota)
 	moneyText.text = "$" + str(money)
 	soulButton.text = "Souls: " + str(souls)
 	trapButton.text = "Traps: " + str(traps)

@@ -1,23 +1,143 @@
-[gd_scene load_steps=5 format=3 uid="uid://mpf7w7maa75m"]
+[gd_scene load_steps=21 format=3 uid="uid://mpf7w7maa75m"]
 
 [ext_resource type="Script" path="res://soul.gd" id="1_hbnpj"]
-
-[sub_resource type="Gradient" id="Gradient_4jmvx"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_yxsjh"]
-gradient = SubResource("Gradient_4jmvx")
-width = 10
-height = 10
+[ext_resource type="Texture2D" uid="uid://c5vhhrt1gwh4a" path="res://sprites/chman1.png" id="2_8jlkp"]
+[ext_resource type="Texture2D" uid="uid://db6irciidpago" path="res://sprites/chman2.png" id="3_vsgm2"]
+[ext_resource type="Texture2D" uid="uid://5ypf68ywm2p7" path="res://sprites/chrun2.png" id="4_xj4oa"]
+[ext_resource type="Texture2D" uid="uid://bh7c45o04mydo" path="res://sprites/chrun3.png" id="5_x54sn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8bepr"]
 size = Vector2(10, 10)
 
+[sub_resource type="Animation" id="Animation_6plla"]
+resource_name = "soulidle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("2_8jlkp"), ExtResource("3_vsgm2")]
+}
+
+[sub_resource type="Animation" id="Animation_04mtb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_8jlkp")]
+}
+
+[sub_resource type="Animation" id="Animation_0iyox"]
+resource_name = "soulrun"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_xj4oa"), ExtResource("5_x54sn")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dr736"]
+_data = {
+"RESET": SubResource("Animation_04mtb"),
+"soulidle": SubResource("Animation_6plla"),
+"soulrun": SubResource("Animation_0iyox")
+}
+
+[sub_resource type="Gradient" id="Gradient_k4q4l"]
+offsets = PackedFloat32Array(0.00819672, 1)
+colors = PackedColorArray(0.980392, 0.415686, 0.0392157, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nly1a"]
+gradient = SubResource("Gradient_k4q4l")
+
+[sub_resource type="Curve" id="Curve_4kfji"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nwbrh"]
+curve = SubResource("Curve_4kfji")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fatxn"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -98, 0)
+scale_min = 3.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_nwbrh")
+color = Color(0.980392, 0.415686, 0.0392157, 1)
+color_ramp = SubResource("GradientTexture1D_nly1a")
+turbulence_enabled = true
+
+[sub_resource type="Curve" id="Curve_au575"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vb61o"]
+curve = SubResource("Curve_au575")
+
+[sub_resource type="Curve" id="Curve_xxw1b"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_10kpk"]
+curve = SubResource("Curve_xxw1b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a2vib"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 33.71
+initial_velocity_max = 33.71
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_10kpk")
+color = Color(0.87451, 0.243137, 0.137255, 1)
+alpha_curve = SubResource("CurveTexture_vb61o")
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
+collision_mask = 0
 script = ExtResource("1_hbnpj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("GradientTexture2D_yxsjh")
+texture = ExtResource("2_8jlkp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8bepr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dr736")
+}
+autoplay = "soulidle"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -1
+emitting = false
+amount = 17
+process_material = SubResource("ParticleProcessMaterial_fatxn")
+randomness = 0.39
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_a2vib")
+one_shot = true
+explosiveness = 1.0
